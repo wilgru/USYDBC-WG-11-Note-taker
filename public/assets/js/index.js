@@ -68,6 +68,7 @@ const renderActiveNote = () => {
 
 const handleNoteSave = () => {
   const newNote = {
+    id: 0,
     title: noteTitle.value,
     text: noteText.value,
   };
@@ -83,13 +84,15 @@ const handleNoteDelete = (e) => {
   e.stopPropagation();
 
   const note = e.target;
-  const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
+  const noteId = encodeURIComponent(note.parentElement.getAttribute('data-note'));
+  
 
   if (activeNote.id === noteId) {
     activeNote = {};
   }
 
-  deleteNote(noteId).then(() => {
+  deleteNote(noteId).then((message) => {
+    alert(message)
     getAndRenderNotes();
     renderActiveNote();
   });
@@ -156,17 +159,17 @@ const renderNoteList = async (notes) => {
 
   if (jsonNotes.length === 0) {
     noteListItems.push(createLi('No saved Notes', false));
-  }
-
-  jsonNotes.forEach((note) => {
-    const li = createLi(note.title);
-    li.dataset.note = JSON.stringify(note);
-
-    noteListItems.push(li);
-  });
-
-  if (window.location.pathname === '/notes') {
-    noteListItems.forEach((note) => noteList[0].append(note));
+  } else {
+    jsonNotes.forEach((note) => {
+      const li = createLi(note.title);
+      li.dataset.note = JSON.stringify(note);
+  
+      noteListItems.push(li);
+    });
+  
+    if (window.location.pathname === '/notes') {
+      noteListItems.forEach((note) => noteList[0].append(note));
+    }
   }
 };
 
