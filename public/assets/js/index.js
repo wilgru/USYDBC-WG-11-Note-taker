@@ -53,7 +53,7 @@ const deleteNote = (id) =>
 const renderActiveNote = () => {
   hide(saveNoteBtn);
 
-  if (activeNote.id) {
+  if (activeNote.text !== undefined) {
     noteTitle.setAttribute('readonly', true);
     noteText.setAttribute('readonly', true);
     noteTitle.value = activeNote.title;
@@ -68,7 +68,6 @@ const renderActiveNote = () => {
 
 const handleNoteSave = () => {
   const newNote = {
-    id: 0,
     title: noteTitle.value,
     text: noteText.value,
   };
@@ -84,15 +83,15 @@ const handleNoteDelete = (e) => {
   e.stopPropagation();
 
   const note = e.target;
-  const noteId = encodeURIComponent(note.parentElement.getAttribute('data-note'));
+  const noteId = encodeURIComponent(note.parentElement.getAttribute('data-note')); // must convert this becasue certain chars eg '{', '"', cant be used in URLs 
   
 
-  if (activeNote.id === noteId) {
-    activeNote = {};
-  }
+  // if (activeNote.id === noteId) {
+  //   activeNote = {};
+  // }
 
-  deleteNote(noteId).then((message) => {
-    alert(message)
+  deleteNote(noteId).then((res) => {
+    alert(JSON.parse(res.message))
     getAndRenderNotes();
     renderActiveNote();
   });
