@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const morgan = require('morgan');
 const path = require('path');
 const api = require('./routes/notes.js');
 
@@ -8,7 +9,9 @@ const app = express();
 
 // middlewares
 app.use(express.json())
+app.use(morgan('tiny'));
 
+// public pages
 app.use(express.static('public'));
 
 // routes
