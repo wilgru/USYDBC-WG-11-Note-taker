@@ -11,7 +11,7 @@ const readFromFile = util.promisify(fs.readFile);
  */
 const writeToFile = (destination, content) =>
   fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
-    err ? console.error(err) : console.info(`\nData written to ${destination}`)
+    err ? console.error(err) : console.info(`> Data written to ${destination}`)
   );
 /**
  *  Function to read data from a given a file and append some content
