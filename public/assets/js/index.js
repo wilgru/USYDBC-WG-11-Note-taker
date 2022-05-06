@@ -9,6 +9,7 @@ if (window.location.pathname === '/notes') {
   noteText = document.querySelector('.note-textarea');
   saveNoteBtn = document.querySelector('.save-note');
   newNoteBtn = document.querySelector('.new-note');
+  alertBanner = document.getElementById("alert-banner")
   noteList = document.querySelectorAll('.list-container .list-group');
 }
 
@@ -21,6 +22,20 @@ const show = (elem) => {
 const hide = (elem) => {
   elem.style.display = 'none';
 };
+
+// customer banner for temporary alerts
+const mainAlert = (message) => {
+  alertBanner.innerText = message
+  alertBanner.style.opacity = 1;
+  alertBanner.style.transition = '500ms';
+
+  setTimeout(()=>{
+    alertBanner.style.opacity = 0;
+  }, 2000)
+  setTimeout(()=>{
+    alertBanner.style.transition = '0ms';
+  }, 4000)
+}
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
@@ -74,7 +89,7 @@ const handleNoteSave = () => {
   saveNote(newNote)
   .then(res => res.json())
   .then(data => {
-    alert(data.message)
+    mainAlert(data.message)
     getAndRenderNotes();
     renderActiveNote();
   });
@@ -96,7 +111,7 @@ const handleNoteDelete = (e) => {
   deleteNote(noteId)
   .then(res => res.json())
   .then(data => {
-    alert(data.message)
+    mainAlert(data.message)
     getAndRenderNotes();
     renderActiveNote();
   });
