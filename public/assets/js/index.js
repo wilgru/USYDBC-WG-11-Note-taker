@@ -71,7 +71,10 @@ const handleNoteSave = () => {
     title: noteTitle.value,
     text: noteText.value,
   };
-  saveNote(newNote).then(() => {
+  saveNote(newNote)
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message)
     getAndRenderNotes();
     renderActiveNote();
   });
@@ -90,8 +93,10 @@ const handleNoteDelete = (e) => {
   //   activeNote = {};
   // }
 
-  deleteNote(noteId).then((res) => {
-    alert(JSON.parse(res.message))
+  deleteNote(noteId)
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message)
     getAndRenderNotes();
     renderActiveNote();
   });
