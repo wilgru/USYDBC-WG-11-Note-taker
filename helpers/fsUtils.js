@@ -20,7 +20,7 @@ const appendToJsonFile = (toAppend, file) => {
       jsonData.push(toAppend);
       writeToJsonFile(file, JSON.stringify(jsonData))
       .then(() => 
-        resolve("Note added successfully")
+        resolve("Note added")
       )
       .catch(err =>
         reject(err) // error writing to json file
@@ -49,7 +49,7 @@ const removeFromJsonFile = (file, toRemove) => {
       if (found) {
         writeToJsonFile(file, JSON.stringify(jsonData))
         .then(() => {
-          resolve("Note removed successfully");
+          resolve("Note removed");
         })
         .catch(err =>
           reject(err)  // error writing to json file
