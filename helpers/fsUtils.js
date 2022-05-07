@@ -1,3 +1,4 @@
+const { json } = require('express/lib/response');
 const fs = require('fs');
 const util = require('util');
 
@@ -10,10 +11,10 @@ const writeToJsonFile =  util.promisify(fs.writeFile)
 // append content to a JSON file
 const appendToJsonFile = (toAppend, file) => {
   return new Promise((resolve, reject) => {
-    if (typeof toAppend !== 'object') reject(`Parsed content is an incorrect type. Received '${typeof toAppend}' expected 'Object'`)
+    if (typeof toAppend !== 'object') reject({ status: 500, error: `Parsed content is an incorrect type. Received '${typeof toAppend}' expected 'Object'` })
     readFromJsonFile(file, 'utf8')
     .catch(err =>
-      reject(err) // error reading from json file
+      reject({ status: 500, error: err }) // error reading from json file
     )
     .then(data => {
       let jsonData = JSON.parse(data);
@@ -23,26 +24,30 @@ const appendToJsonFile = (toAppend, file) => {
         resolve("Note added")
       )
       .catch(err =>
-        reject(err) // error writing to json file
+        reject({ status: 500, error: err }) // error writing to json file
       );
     })
   })
 };
 
 // remove object from list of objects
-const removeFromJsonFile = (file, toRemove) => {
+const removeFromJsonFile = (file, idToRemove) => {
   return new Promise((resolve, reject) => {
-    if (typeof toRemove !== 'object') reject(`Parsed content is an incorrect type. Received '${typeof toRemove}' expected 'Object'`)
+    const noteIdInt = parseInt(idToRemove)
+    if (noteIdInt === NaN) reject({status: 400, error: `Parsed content is an incorrect type. Received '${typeof idToRemove}' expected 'number'`})
     readFromJsonFile(file, 'utf8')
     .catch(err =>
-      reject(err) // error reading from json file
+      reject({status: 500, error: err}) // error reading from json file
     )
     .then(data => {
       const jsonData = JSON.parse(data);
       let found = false;
       jsonData.forEach((obj, index) => {
-        if (obj.title == toRemove.title && obj.text == toRemove.text) {
-          jsonData.splice(index);
+        if (obj.id === noteIdInt) {
+          // console.log(obj.id, idToRemove)
+          console.log(jsonData)
+          jsonData.splice(index, 1);
+          console.log(jsonData)
           found = true;
         }
       });
@@ -52,10 +57,10 @@ const removeFromJsonFile = (file, toRemove) => {
           resolve("Note removed");
         })
         .catch(err =>
-          reject(err)  // error writing to json file
+          reject({status: 500, error: err})  // error writing to json file
         );
       } else {
-        reject("Could not find note to delete")
+        reject({status: 400, error: "Could not find note to delete"})
       }
     })
   })
