@@ -3,24 +3,23 @@
 
 ## Description
 
-A note taking app
+A note taking app that allows users to add, view and delete notes at any time. The website is build using a node.js and express.js back-end and is deployed using Heroku.
 
 ## Table of Contents
  
-[Usage](#Usage)   
-[Tests](#Tests)  
+[Link](#Link)   
 [Demonstration](#Demonstration)  
 [License](#License)    
 
-<a name="Usage"></a>
-## Usage
+<a name="Link"></a>
+## Link
 
-
+You can check out the deployed website ![here](). Feel free to test it out!
 
 <a name="Demonstration"></a>
 ## Demonstration
 
-![usage demo]()
+![usage demo](https://github.com/wilgru/USYDBC-WG-11-Note-taker/blob/main/assets/demo.png)
 
 <a name="License"></a>
 ## License
