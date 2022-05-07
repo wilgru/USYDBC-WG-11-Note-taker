@@ -10,8 +10,8 @@ notesRouter.get('/', (req, res) => {
         res.json(JSON.parse(data))
     })
     .catch(err => {
-        res.json({ message: err})
-        console.log(`ERROR: ${err}`)
+        res.status(500).json({ message: "Something went wrong. Please try again later."})
+        console.log(`ERROR ${err.status}: ${err}`)
     })
 })
 
@@ -23,21 +23,21 @@ notesRouter.post('/', (req, res) => {
         console.log(`SUCCESS: ${successMessage}`)
     })
     .catch(err => {
-        res.json({ message: err})
-        console.log(`ERROR: ${err}`)
+        res.status(err.status).json({ message: "Something went wrong. Please try again later."})
+        console.log(`ERROR ${err.status}: ${err.error}`)
     })
 })
 
 notesRouter.delete('/:noteid', (req, res) => {
-    const noteToRemove = JSON.parse(decodeURIComponent(req.params.noteid)); // convert from URI encoded back to plain text to then convert to json
-    removeFromJsonFile('./db/db.json', noteToRemove)
+    const noteId = req.params.noteid; // convert from URI encoded back to plain text to then convert to json
+    removeFromJsonFile('./db/db.json', noteId)
     .then(successMessage => {
         res.json({ message: successMessage })
         console.log(`SUCCESS: ${successMessage}`)
     })
     .catch(err => {
-        res.json({ message: err})
-        console.log(`ERROR: ${err}`)
+        res.status(err.status).json({ message: `${err.status}: Something went wrong. Please try again later.`})
+        console.log(`ERROR ${err.status}: ${err.error}`)
     })
 })
 
