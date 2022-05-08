@@ -14,7 +14,7 @@ A note taking app that allows users to add, view and delete notes at any time. T
 <a name="Link"></a>
 ## Link
 
-You can check out the deployed website ![here](). Feel free to test it out!
+You can check out the deployed website <a href="https://usydbc-wg-11-note-taker.herokuapp.com/">here</a>. Feel free to test it out!
 
 <a name="Demonstration"></a>
 ## Demonstration
