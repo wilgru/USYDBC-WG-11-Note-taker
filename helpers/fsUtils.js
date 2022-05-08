@@ -44,10 +44,7 @@ const removeFromJsonFile = (file, idToRemove) => {
       let found = false;
       jsonData.forEach((obj, index) => {
         if (obj.id === noteIdInt) {
-          // console.log(obj.id, idToRemove)
-          console.log(jsonData)
           jsonData.splice(index, 1);
-          console.log(jsonData)
           found = true;
         }
       });
