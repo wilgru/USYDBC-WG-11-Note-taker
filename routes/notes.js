@@ -36,7 +36,7 @@ notesRouter.delete('/:noteid', (req, res) => {
         console.log(`SUCCESS: ${successMessage}`)
     })
     .catch(err => {
-        res.status(err.status).json({ message: `${err.status}: Something went wrong. Please try again later.`})
+        res.status(err.status).json({ message: "Something went wrong. Please try again later."})
         console.log(`ERROR ${err.status}: ${err.error}`)
     })
 })
